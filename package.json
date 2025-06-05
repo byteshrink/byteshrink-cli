@@ -1,0 +1,22 @@
+{
+  "name": "byteshrink",
+  "version": "1.0.0",
+  "description": "CLI to analyze package.json using the ByteShrink AI API",
+  "bin": {
+    "byteshrink": "./bin/index.js"
+  },
+  "type": "module",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "boxen": "^7.1.1",
+    "chalk": "^5.4.1",
+    "node-fetch": "^3.3.2",
+    "zod": "^3.25.51"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.29",
+    "typescript": "^5.8.3"
+  }
+}
