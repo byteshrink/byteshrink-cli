@@ -1,9 +1,12 @@
 {
-  "name": "byteshrink",
-  "version": "1.0.0",
+  "name": "@byteshrink/cli",
+  "version": "1.0.3",
   "description": "CLI to analyze package.json using the ByteShrink AI API",
   "bin": {
-    "byteshrink": "./bin/index.js"
+    "byteshrink": "./dist/bin/index.js"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "type": "module",
   "scripts": {

@@ -1,38 +1,54 @@
-import fetch from 'node-fetch';
 import { z } from 'zod';
+
+const API_URL = 'https://api.byteshrink.dev/api/optimize';
+const DEFAULT_MODEL = 'deepseek/deepseek-r1:free';
 
 const ResponseSchema = z.object({
   suggestions: z.string().optional(),
-  error: z.string().optional()
+  error: z.string().optional(),
 });
 
-export async function analyzePackageJson(pkg: any, model: string): Promise<string> {
-  const response = await fetch("https://api.byteshrink.dev/api/optimize", {
-    method: "POST",
+export async function analyze(pkg: Record<string, any>): Promise<string> {
+  console.log(API_URL, {
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json",
-      "X-Model": model
+      'Content-Type': 'application/json',
+      'X-Model': DEFAULT_MODEL,
     },
-    body: JSON.stringify({
-      dependencies: pkg.dependencies || {},
-      devDependencies: pkg.devDependencies || {}
-    })
+    body: JSON.stringify(pkg),
+  })
+  const response = await fetch(API_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Model': DEFAULT_MODEL,
+    },
+    body: JSON.stringify(pkg),
   });
 
-  const raw = await response.json();
-  const result = ResponseSchema.safeParse(raw);
 
-  if (!result.success) {
-    return "Invalid response format from API.";
+const contentType = response.headers.get('content-type');
+
+if (!response.ok) {
+  const text = await response.text();
+  throw new Error(`API error (${response.status}): ${text}`);
+}
+
+if (!contentType?.includes('application/json')) {
+  const text = await response.text();
+  throw new Error(`Expected JSON but got: ${text}`);
+}
+
+  const json = await response.json();
+  const parsed = ResponseSchema.safeParse(json);
+
+  if (!parsed.success) {
+    throw new Error('Invalid response format from server.');
   }
 
-  const data = result.data;
+  const data = parsed.data;
 
-  if (data.suggestions) {
-    return data.suggestions;
-  } else if (data.error) {
-    return `Error: ${data.error}`;
-  } else {
-    return "No suggestions received.";
-  }
+  if (data.suggestions) return data.suggestions;
+  if (data.error) return `Error: ${data.error}`;
+  return 'No suggestions received.';
 }
