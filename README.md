@@ -1,4 +1,4 @@
-# ByteShrink AI CLI
+# ByteShrink CLI
 
 A simple command-line tool to analyze your `package.json` for bundle size and performance improvements using ByteShrink AI.
 
