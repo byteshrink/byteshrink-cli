@@ -5,13 +5,13 @@ A simple command-line tool to analyze your `package.json` for bundle size and pe
 ## Usage
 
 ```bash
-npx byteshrink ./package.json
+npx @byteshrink/cli ./package.json
 ```
 
 Or install globally:
 
 ```bash
-npm install -g byteshrink
+npm install -g @byteshrink/cli
 byteshrink ./path/to/package.json
 ```
 
@@ -19,7 +19,7 @@ byteshrink ./path/to/package.json
 
 ```bash
 npm install
-npm run build
+npm run dev
 ```
 
 ## Example Output

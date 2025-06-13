@@ -8,6 +8,9 @@ import { existsSync } from 'fs';
 import { analyze } from '../lib/analyze.js';
 import { getCache, setCache } from '../lib/cache.js';
 import { loadConfig } from '../lib/config.js';
+import ora from 'ora';
+
+const spinner = ora('Analyzing your project...').start();
 
 const args = process.argv.slice(2);
 
@@ -48,10 +51,11 @@ if (!existsSync(filePath)) {
     if (config.cache !== false) {
       setCache(cacheKey, suggestions);
     }
-
+    spinner.succeed('Analysis complete!');
     printBoxed(suggestions);
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : 'Unknown error';
+    spinner.fail('Something went wrong.');
     console.error(chalk.red('❌ Failed to analyze package.json:'), message);
     process.exit(1);
   }

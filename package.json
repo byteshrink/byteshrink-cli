@@ -1,6 +1,6 @@
 {
   "name": "@byteshrink/cli",
-  "version": "1.0.3",
+  "version": "1.0.7",
   "description": "CLI to analyze package.json using the ByteShrink AI API",
   "bin": {
     "byteshrink": "./dist/bin/index.js"
@@ -10,16 +10,19 @@
   },
   "type": "module",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "dev": "tsx bin/index.ts"
   },
   "dependencies": {
     "boxen": "^7.1.1",
     "chalk": "^5.4.1",
     "node-fetch": "^3.3.2",
+    "ora": "^8.2.0",
     "zod": "^3.25.51"
   },
   "devDependencies": {
     "@types/node": "^22.15.29",
+    "tsx": "^4.20.3",
     "typescript": "^5.8.3"
   }
 }

@@ -9,14 +9,6 @@ const ResponseSchema = z.object({
 });
 
 export async function analyze(pkg: Record<string, any>): Promise<string> {
-  console.log(API_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-Model': DEFAULT_MODEL,
-    },
-    body: JSON.stringify(pkg),
-  })
   const response = await fetch(API_URL, {
     method: 'POST',
     headers: {
